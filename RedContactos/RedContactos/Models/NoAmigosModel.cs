@@ -23,7 +23,8 @@ namespace RedContactos.Models
             var d=await vm._servicio.AddContacto(ContactoModel);
             if (d != null)
             {
-                vm.Amigos.Add(ContactoModel);
+                //vm.Amigos.Add(ContactoModel);
+                MessagingCenter.Send(ContactoModel,"AddContacto");
                 vm.NoAmigos.Remove(this);
                 await vm._page.MostrarAlerta("Exito", "Contacto añadido", "Ok");
                 

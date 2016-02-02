@@ -5,10 +5,11 @@ using RedContactos.Models;
 using RedContactos.Service;
 using Xamarin.Forms;
 using MvvmLibrary.Factorias;
+using RedContactos.View.Contactos;
 
 namespace RedContactos.ViewModel.Contactos
 {
-    public class ContactosViewModel:GeneralViewModel
+    public class ContactosViewModel : GeneralViewModel
     {
         private ObservableCollection<ContactoModel> _amigos;
         private ObservableCollection<NoAmigosModel> _noAmigos;
@@ -17,13 +18,13 @@ namespace RedContactos.ViewModel.Contactos
         public ObservableCollection<ContactoModel> Amigos
         {
             get { return _amigos; }
-            set { SetProperty(ref _amigos , value); }
+            set { SetProperty(ref _amigos, value); }
         }
 
         public ObservableCollection<NoAmigosModel> NoAmigos
         {
             get { return _noAmigos; }
-            set { SetProperty(ref _noAmigos , value); }
+            set { SetProperty(ref _noAmigos, value); }
         }
 
         public ContactoModel ContactoSeleccionado
@@ -38,7 +39,7 @@ namespace RedContactos.ViewModel.Contactos
                     RunAddMensaje();
                 }
 
-                
+
             }
         }
 
@@ -47,10 +48,21 @@ namespace RedContactos.ViewModel.Contactos
         public ContactosViewModel(INavigator navigator, IServicioMovil servicio, IPage page) : base(navigator, servicio, page)
         {
             CmdNuevo = new Command(RunNuevoContacto);
+
+            MessagingCenter.Subscribe<string>(this, "Hola", (sender) =>
+             {
+             });
+            MessagingCenter.Unsubscribe<string>(this,"Hola");
+            MessagingCenter.Subscribe<ContactoModel>(this,"AddContacto", (sender) =>
+            {
+                Amigos.Add(sender);
+            });
         }
 
         private async void RunNuevoContacto()
         {
+            MessagingCenter.Send("Hola don pepito", "Hola");
+
             await _navigator.PushAsync<AddContactoViewModel>(viewModel =>
             {
                 viewModel.Amigos = Amigos;
@@ -63,7 +75,7 @@ namespace RedContactos.ViewModel.Contactos
             await _navigator.PushAsync<EnviarMensajeViewModel>(viewModel =>
             {
                 viewModel.Contacto = ContactoSeleccionado;
-                viewModel.Mensaje=new MensajeModel();
+                viewModel.Mensaje = new MensajeModel();
             });
             ContactoSeleccionado = null;
         }

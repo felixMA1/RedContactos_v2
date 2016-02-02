@@ -39,6 +39,8 @@ namespace RedContactos.ViewModel.Contactos
 
         private async void RunEnviarMensaje()
         {
+            MessagingCenter.Send("Estoy en mensajes","Hola ");
+
             try
             {
                 IsBusy = true;

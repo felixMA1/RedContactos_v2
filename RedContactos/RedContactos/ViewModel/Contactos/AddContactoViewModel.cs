@@ -23,6 +23,7 @@ namespace RedContactos.ViewModel.Contactos
 
         public ObservableCollection<NoAmigosModel> NoAmigos
         {
+            var a = "";
             get { return _noAmigos; }
             set { SetProperty(ref _noAmigos, value); }
         }
