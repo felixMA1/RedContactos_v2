@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ContactosModel.Model;
-using MvvmLibrary.Factorias;
 using RedContactos.Models;
 using RedContactos.Service;
 using Xamarin.Forms;
+using MvvmLibrary.Factorias;
 
 namespace RedContactos.ViewModel.Contactos
 {
